@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -9,6 +10,7 @@ import numpy as np
 import os
 import uuid
 import re
+from pathlib import Path
 
 # ================== APP ==================
 app = FastAPI()
@@ -20,6 +22,19 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+
+BASE_DIR = Path(__file__).resolve().parent
+AUDIO_DIR = BASE_DIR / "audio"
+AUDIO_DIR.mkdir(exist_ok=True)
+
+# ================== STATIC ==================
+app.mount("/static", StaticFiles(directory=BASE_DIR), name="static")
+
+
+
+    
 
 # ================== MODELS ==================
 class Question(BaseModel):
