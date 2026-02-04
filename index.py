@@ -31,6 +31,7 @@ AUDIO_DIR.mkdir(exist_ok=True)
 
 # ================== STATIC ==================
 app.mount("/static", StaticFiles(directory=BASE_DIR), name="static")
+app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 
 
 
@@ -530,14 +531,10 @@ async def get_audio(filename: str):
 
 # ================== HEALTH ==================
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 async def root():
-    return {
-        "status": "NERDZ '26 Bot running 🚀",
-        "mode": "Deterministic + TF-IDF fallback + Guest Carousel",
-        "features": ["Chat Bot", "Guest Carousel", "Auto-play Audio"],
-        "audio_files": len([f for f in os.listdir(AUDIO_DIR) if f.endswith('.mp3')])
-    }
+    return FileResponse("index.html")
+
 
 @app.post("/cleanup-audio")
 async def manual_cleanup():
