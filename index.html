@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>NERDZ '26 Bot 🎓</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Prevent aggressive caching -->
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(
+          135deg,
+          #0f172a 0%,
+          #1e293b 50%,
+          #0f172a 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #e5e7eb;
+        padding: 20px;
+        overflow-x: hidden;
+      }
+
+      .main-container {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      /* ========== CAROUSEL SECTION ========== */
+      .carousel-section {
+        flex: 1;
+        min-width: 300px;
+        max-width: 600px;
+        background: rgba(2, 6, 23, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6),
+          0 0 100px rgba(139, 92, 246, 0.1);
+        border: 1px solid rgba(139, 92, 246, 0.2);
+        position: relative;
+      }
+
+      .carousel-header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .carousel-header h2 {
+        color: #a78bfa;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-shadow: 0 0 20px rgba(167, 139, 250, 0.3);
+      }
+
+      .carousel-subtitle {
+        color: #94a3b8;
+        font-size: 13px;
+      }
+
+      .carousel-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+        background: rgba(15, 23, 42, 0.8);
+        min-height: 350px;
+      }
+
+      .carousel-slide {
+        display: none;
+        padding: 25px;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+
+      .carousel-slide.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .guest-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+        color: #020617;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+      }
+
+      .guest-name {
+        font-size: 20px;
+        font-weight: 700;
+        color: #a78bfa;
+        margin-bottom: 8px;
+        line-height: 1.3;
+      }
+
+      .guest-title {
+        font-size: 13px;
+        color: #94a3b8;
+        margin-bottom: 15px;
+        line-height: 1.5;
+      }
+
+      .guest-description {
+        font-size: 14px;
+        color: #cbd5e1;
+        line-height: 1.7;
+        text-align: justify;
+      }
+
+      .carousel-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .carousel-btn {
+        background: rgba(139, 92, 246, 0.2);
+        border: 2px solid rgba(139, 92, 246, 0.4);
+        color: #a78bfa;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+
+      .carousel-btn:hover {
+        background: rgba(139, 92, 246, 0.3);
+        border-color: #a78bfa;
+        transform: scale(1.1);
+      }
+
+      .carousel-dots {
+        display: flex;
+        gap: 8px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(139, 92, 246, 0.3);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .dot.active {
+        background: #a78bfa;
+        width: 24px;
+        border-radius: 5px;
+      }
+
+      .carousel-audio-player {
+        margin-top: 15px;
+        padding: 15px;
+        background: rgba(139, 92, 246, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(139, 92, 246, 0.2);
+      }
+
+      .carousel-audio-player audio {
+        width: 100%;
+        border-radius: 8px;
+        outline: none;
+      }
+
+      .auto-play-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+        padding: 10px;
+        background: rgba(139, 92, 246, 0.1);
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .auto-play-toggle:hover {
+        background: rgba(139, 92, 246, 0.2);
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 24px;
+        background: rgba(139, 92, 246, 0.3);
+        border-radius: 12px;
+        transition: all 0.3s;
+      }
+
+      .toggle-switch.active {
+        background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+      }
+
+      .toggle-slider {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 50%;
+        transition: all 0.3s;
+      }
+
+      .toggle-switch.active .toggle-slider {
+        transform: translateX(26px);
+      }
+
+      /* ========== CHAT SECTION ========== */
+      .chat-container {
+        flex: 1;
+        min-width: 300px;
+        max-width: 500px;
+        background: rgba(2, 6, 23, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6),
+          0 0 100px rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.2);
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        color: #38bdf8;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+      }
+
+      .subtitle {
+        color: #94a3b8;
+        font-size: 14px;
+        font-weight: 400;
+      }
+
+      .input-section {
+        margin-bottom: 20px;
+      }
+
+      .input-box {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      input {
+        flex: 1;
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 2px solid rgba(56, 189, 248, 0.3);
+        background: rgba(15, 23, 42, 0.8);
+        color: #e5e7eb;
+        font-size: 15px;
+        transition: all 0.3s;
+        outline: none;
+      }
+
+      input:focus {
+        border-color: #38bdf8;
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+      }
+
+      input::placeholder {
+        color: #64748b;
+      }
+
+      button {
+        padding: 14px 18px;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 15px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      button:active {
+        transform: scale(0.95);
+      }
+
+      .ask-btn {
+        background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+        color: #020617;
+        min-width: 80px;
+        box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+      }
+
+      .ask-btn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #0ea5e9, #0284c7);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+      }
+
+      .ask-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .mic-btn {
+        background: linear-gradient(135deg, #22c55e, #16a34a);
+        color: #020617;
+        min-width: 60px;
+        box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+      }
+
+      .mic-btn:hover:not(:disabled) {
+        background: linear-gradient(135deg, #16a34a, #15803d);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(34, 197, 94, 0.4);
+      }
+
+      .mic-btn.recording {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      .suggestions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 10px;
+      }
+
+      .suggestion-chip {
+        background: rgba(56, 189, 248, 0.1);
+        color: #38bdf8;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .suggestion-chip:hover {
+        background: rgba(56, 189, 248, 0.2);
+        border-color: #38bdf8;
+        transform: translateY(-2px);
+      }
+
+      .response-section {
+        margin-top: 20px;
+      }
+
+      .response-box {
+        background: rgba(15, 23, 42, 0.8);
+        border: 2px solid rgba(56, 189, 248, 0.2);
+        padding: 20px;
+        border-radius: 14px;
+        min-height: 120px;
+        max-height: 300px;
+        overflow-y: auto;
+        white-space: pre-line;
+        line-height: 1.6;
+        font-size: 14px;
+        color: #cbd5e1;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .response-box::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .response-box::-webkit-scrollbar-track {
+        background: rgba(15, 23, 42, 0.5);
+        border-radius: 10px;
+      }
+
+      .response-box::-webkit-scrollbar-thumb {
+        background: rgba(56, 189, 248, 0.3);
+        border-radius: 10px;
+      }
+
+      .response-box::-webkit-scrollbar-thumb:hover {
+        background: rgba(56, 189, 248, 0.5);
+      }
+
+      .thinking {
+        color: #38bdf8;
+        font-style: italic;
+        animation: thinking 1.5s infinite;
+      }
+
+      @keyframes thinking {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .audio-player {
+        margin-top: 15px;
+        padding: 15px;
+        background: rgba(56, 189, 248, 0.05);
+        border-radius: 12px;
+        border: 1px solid rgba(56, 189, 248, 0.2);
+        display: none;
+      }
+
+      .audio-player.active {
+        display: block;
+      }
+
+      audio {
+        width: 100%;
+        border-radius: 12px;
+        outline: none;
+        filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+      }
+
+      audio::-webkit-media-controls-panel {
+        background: rgba(56, 189, 248, 0.1);
+      }
+
+      .error {
+        color: #f87171;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(56, 189, 248, 0.1);
+      }
+
+      .footer-text {
+        font-size: 12px;
+        color: #64748b;
+      }
+
+      .footer-text strong {
+        color: #38bdf8;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .main-container {
+          flex-direction: column;
+        }
+        
+        .carousel-section,
+        .chat-container {
+          max-width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- ========== CAROUSEL SECTION ========== -->
+      <div class="carousel-section">
+        <div class="carousel-header">
+          <h2>👥 Distinguished Guests</h2>
+          <p class="carousel-subtitle">Meet our esteemed guests for NERDZ '26</p>
+        </div>
+
+        <div class="carousel-container">
+          <!-- Slide 1: Inaugural Chief Guest -->
+          <div class="carousel-slide active">
+            <span class="guest-badge">Inaugural Ceremony - Chief Guest</span>
+            <h3 class="guest-name">Shri Danish Ashraf</h3>
+            <p class="guest-title">
+              Joint Development Commissioner<br />
+              Ministry of MSME, Government of India
+            </p>
+            <p class="guest-description">
+              We are honoured to welcome Shri Danish Ashraf as the Chief Guest
+              for the Inaugural Ceremony. His distinguished service and
+              leadership in strengthening India's MSME ecosystem have
+              significantly contributed to innovation, entrepreneurship, and
+              inclusive economic growth. His presence adds great value and
+              inspiration to the inauguration of the event.
+            </p>
+          </div>
+
+          <!-- Slide 2: Inaugural Guest of Honour -->
+          <div class="carousel-slide">
+            <span class="guest-badge">Inaugural Ceremony - Guest of Honour</span>
+            <h3 class="guest-name">Lt. Gen. Anil Malik, AVSM</h3>
+            <p class="guest-title">
+              Former Director General<br />
+              Discipline, Ceremonials & Welfare, Army Headquarters
+            </p>
+            <p class="guest-description">
+              We are privileged to have Lt. Gen. Anil Malik, AVSM, as the Guest
+              of Honour. With a remarkable career in the Indian Army, he
+              exemplifies discipline, integrity, and selfless service. His vast
+              experience and commitment to national service are a source of
+              motivation for all.
+            </p>
+          </div>
+
+          <!-- Slide 3: Valedictory Chief Guest -->
+          <div class="carousel-slide">
+            <span class="guest-badge">Valedictory Ceremony - Chief Guest</span>
+            <h3 class="guest-name">Dr. Sunil Kumar Barnwal</h3>
+            <p class="guest-title">
+              CEO, National Health Authority<br />
+              Ministry of Health & Family Welfare, Government of India
+            </p>
+            <p class="guest-description">
+              It is our distinct pleasure to welcome Dr. Sunil Kumar Barnwal as
+              the Chief Guest for the Valedictory Ceremony. His visionary
+              leadership in advancing India's digital health initiatives has
+              played a crucial role in transforming the healthcare ecosystem of
+              the nation. His insights will greatly enrich the concluding
+              session of the event.
+            </p>
+          </div>
+
+          <!-- Slide 4: Valedictory Guest of Honour -->
+          <div class="carousel-slide">
+            <span class="guest-badge">Valedictory Ceremony - Guest of Honour</span>
+            <h3 class="guest-name">Ms. Hena Parveen</h3>
+            <p class="guest-title">
+              Educationist & Advisor<br />
+              UBA-JH
+            </p>
+            <p class="guest-description">
+              We are delighted to have Ms. Hena Parveen as the Guest of Honour.
+              Her dedication to education, social upliftment, and community
+              development reflects her deep commitment to nation-building. Her
+              guidance and continued support have been instrumental in inspiring
+              young minds and strengthening academic-social initiatives.
+            </p>
+          </div>
+        </div>
+
+        <!-- Carousel Audio Player -->
+        <div class="carousel-audio-player">
+          <audio id="carouselAudio" controls></audio>
+        </div>
+
+        <!-- Carousel Controls -->
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="prevBtn">◀</button>
+          <div class="carousel-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+          </div>
+          <button class="carousel-btn" id="nextBtn">▶</button>
+        </div>
+
+        <!-- Auto-play Toggle -->
+        <div class="auto-play-toggle" id="autoPlayToggle">
+          <span style="font-size: 13px; color: #94a3b8;">Auto-play</span>
+          <div class="toggle-switch active" id="toggleSwitch">
+            <div class="toggle-slider"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== CHAT BOT SECTION ========== -->
+      <div class="chat-container">
+        <div class="header">
+          <h1>🎓 NERDZ '26 Bot</h1>
+          <p class="subtitle">Your AI assistant for NERDZ fest information</p>
+        </div>
+
+        <div class="input-section">
+          <div class="input-box">
+            <input
+              id="question"
+              type="text"
+              placeholder="Ask about events, dates, coordinators..."
+              autocomplete="off"
+            />
+            <button type="button" class="ask-btn" id="askBtn">
+              <span>Ask</span>
+            </button>
+            <button
+              type="button"
+              class="mic-btn"
+              id="micBtn"
+              title="Voice input"
+            >
+              🎤
+            </button>
+          </div>
+
+          <div class="suggestions">
+            <div class="suggestion-chip" data-question="What is NERDZ '26?">
+              About NERDZ
+            </div>
+            <div class="suggestion-chip" data-question="When is the Hackathon?">
+              Hackathon
+            </div>
+            <div class="suggestion-chip" data-question="Tell me about Star Night">
+              Star Night
+            </div>
+            <div class="suggestion-chip" data-question="Who are the guests?">
+              Guests
+            </div>
+          </div>
+        </div>
+
+        <div class="response-section">
+          <div id="text" class="response-box">
+            👋 Welcome! I'm here to help you learn about NERDZ '26 - the
+            techno-cultural fest at Jamia Hamdard University. Ask me anything
+            about: 
+            
+• Event schedules and timings 
+• Teacher coordinators and student leads 
+• Competitions and performances 
+• Venue information 
+• Distinguished guests
+
+🔊 Audio responses will play automatically!</div>
+
+          <div class="audio-player" id="audioPlayer">
+            <audio id="audio" controls></audio>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p class="footer-text">
+            Powered by <strong>FastAPI</strong> &
+            <strong>Sentence Transformers</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ========== CAROUSEL LOGIC ==========
+      const slides = document.querySelectorAll(".carousel-slide");
+      const dots = document.querySelectorAll(".dot");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+      const carouselAudio = document.getElementById("carouselAudio");
+      const toggleSwitch = document.getElementById("toggleSwitch");
+      const autoPlayToggle = document.getElementById("autoPlayToggle");
+
+      let currentSlide = 0;
+      let autoPlay = true;
+      let autoPlayInterval;
+      let carouselBusy = false;
+
+      const guestData = [
+        {
+          text: "Inaugural Ceremony – Chief Guest. We are honoured to welcome Shri Danish Ashraf, Joint Development Commissioner, Ministry of MSME, Government of India, as the Chief Guest for the Inaugural Ceremony. His distinguished service and leadership in strengthening India's MSME ecosystem have significantly contributed to innovation, entrepreneurship, and inclusive economic growth. His presence adds great value and inspiration to the inauguration of the event.",
+        },
+        {
+          text: "Inaugural Ceremony – Guest of Honour. We are privileged to have Lt. Gen. Anil Malik, AVSM, Former Director General, Discipline, Ceremonials & Welfare, Army Headquarters, as the Guest of Honour. With a remarkable career in the Indian Army, he exemplifies discipline, integrity, and selfless service. His vast experience and commitment to national service are a source of motivation for all.",
+        },
+        {
+          text: "Valedictory Ceremony – Chief Guest. It is our distinct pleasure to welcome Dr. Sunil Kumar Barnwal, CEO, National Health Authority, Ministry of Health & Family Welfare, Government of India, as the Chief Guest for the Valedictory Ceremony. His visionary leadership in advancing India's digital health initiatives has played a crucial role in transforming the healthcare ecosystem of the nation. His insights will greatly enrich the concluding session of the event.",
+        },
+        {
+          text: "Valedictory Ceremony – Guest of Honour. We are delighted to have Ms. Hena Parveen, Educationist & Advisor, UBA-JH, as the Guest of Honour. Her dedication to education, social upliftment, and community development reflects her deep commitment to nation-building. Her guidance and continued support have been instrumental in inspiring young minds and strengthening academic-social initiatives.",
+        },
+      ];
+
+      function showSlide(n) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        dots.forEach((dot) => dot.classList.remove("active"));
+
+        currentSlide = (n + slides.length) % slides.length;
+
+        slides[currentSlide].classList.add("active");
+        dots[currentSlide].classList.add("active");
+
+        loadGuestAudio(currentSlide);
+      }
+
+      async function loadGuestAudio(index) {
+        if (carouselBusy) return;
+
+        carouselBusy = true;
+        carouselAudio.pause();
+        carouselAudio.src = "";
+
+        try {
+          const res = await fetch("http://127.0.0.1:8000/guest-audio", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ guest_index: index }),
+          });
+
+          if (!res.ok) throw new Error("Failed to load audio");
+
+          const data = await res.json();
+
+          if (data.audio) {
+            const audioUrl = `http://127.0.0.1:8000/audio/${
+              data.audio
+            }?v=${Date.now()}`;
+            carouselAudio.src = audioUrl;
+
+            if (autoPlay) {
+              carouselAudio.onloadeddata = () => {
+                carouselAudio.play().catch((err) => {
+                  console.log("Auto-play prevented:", err);
+                });
+              };
+            }
+          }
+        } catch (err) {
+          console.error("Carousel audio error:", err);
+        } finally {
+          carouselBusy = false;
+        }
+      }
+
+      prevBtn.addEventListener("click", () => {
+        stopAutoPlay();
+        showSlide(currentSlide - 1);
+      });
+
+      nextBtn.addEventListener("click", () => {
+        stopAutoPlay();
+        showSlide(currentSlide + 1);
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", (e) => {
+          stopAutoPlay();
+          const slideIndex = parseInt(e.target.dataset.slide);
+          showSlide(slideIndex);
+        });
+      });
+
+      function startAutoPlay() {
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
+        autoPlayInterval = setInterval(() => {
+          showSlide(currentSlide + 1);
+        }, 15000); // Change slide every 15 seconds
+      }
+
+      function stopAutoPlay() {
+        if (autoPlayInterval) {
+          clearInterval(autoPlayInterval);
+          autoPlayInterval = null;
+        }
+        autoPlay = false;
+        toggleSwitch.classList.remove("active");
+      }
+
+      autoPlayToggle.addEventListener("click", () => {
+        autoPlay = !autoPlay;
+        toggleSwitch.classList.toggle("active");
+
+        if (autoPlay) {
+          startAutoPlay();
+        } else {
+          stopAutoPlay();
+        }
+      });
+
+      // Initialize carousel
+      loadGuestAudio(0);
+      startAutoPlay();
+
+      // ========== CHATBOT LOGIC ==========
+      const askBtn = document.getElementById("askBtn");
+      const micBtn = document.getElementById("micBtn");
+      const input = document.getElementById("question");
+      const textBox = document.getElementById("text");
+      const audioEl = document.getElementById("audio");
+      const audioPlayer = document.getElementById("audioPlayer");
+      const suggestions = document.querySelectorAll(".suggestion-chip");
+
+      let busy = false;
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") e.preventDefault();
+      });
+
+      askBtn.addEventListener("click", () => {
+        if (busy) return;
+        const q = input.value.trim();
+        if (!q) {
+          textBox.textContent = "⚠️ Please type a question first!";
+          return;
+        }
+        input.blur();
+        
+        // Pause carousel when user asks question
+        stopAutoPlay();
+        carouselAudio.pause();
+        
+        askBot(q);
+        input.value = "";
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          askBtn.click();
+        }
+      });
+
+      suggestions.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          if (busy) return;
+          const q = chip.dataset.question;
+          input.value = "";
+          
+          // Pause carousel when user clicks suggestion
+          stopAutoPlay();
+          carouselAudio.pause();
+          
+          askBot(q);
+        });
+      });
+
+      micBtn.addEventListener("click", () => {
+        if (busy) return;
+
+        const SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        if (!SpeechRecognition) {
+          textBox.textContent =
+            "❌ Speech recognition not supported. Use Chrome.";
+          return;
+        }
+
+        const rec = new SpeechRecognition();
+        rec.lang = "en-US";
+        rec.continuous = false;
+        rec.interimResults = false;
+
+        rec.onstart = () => {
+          micBtn.classList.add("recording");
+          textBox.textContent = "🎤 Listening...";
+          
+          // Pause carousel during voice input
+          stopAutoPlay();
+          carouselAudio.pause();
+        };
+
+        rec.onresult = (e) => {
+          const transcript = e.results[0][0].transcript;
+          setTimeout(() => askBot(transcript), 300);
+        };
+
+        rec.onend = () => micBtn.classList.remove("recording");
+        rec.onerror = () => micBtn.classList.remove("recording");
+
+        rec.start();
+      });
+
+      async function askBot(question) {
+        busy = true;
+        askBtn.disabled = true;
+        micBtn.disabled = true;
+
+        textBox.innerHTML = `<span class="thinking">🤔 Thinking...</span>`;
+        audioPlayer.classList.remove("active");
+        audioEl.pause();
+        audioEl.src = "";
+
+        try {
+          console.log("Sending question:", question);
+
+          const res = await fetch("http://127.0.0.1:8000/ask", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question }),
+          });
+
+          console.log("Response status:", res.status);
+
+          if (!res.ok) {
+            throw new Error(`Backend error: ${res.status} ${res.statusText}`);
+          }
+
+          const data = await res.json();
+          console.log("Response data:", data);
+
+          if (data.text) {
+            textBox.textContent = data.text;
+          } else {
+            textBox.textContent = "No response text received.";
+          }
+
+          if (data.audio) {
+            const audioUrl = `http://127.0.0.1:8000/audio/${
+              data.audio
+            }?v=${Date.now()}`;
+            console.log("✅ Audio URL generated:", audioUrl);
+
+            audioEl.src = audioUrl;
+            audioPlayer.classList.add("active");
+            console.log("✅ Audio player set to active");
+
+            audioEl.onloadeddata = () => {
+              console.log("✅ Audio loaded successfully");
+              audioEl.play()
+                .then(() => {
+                  console.log("✅ Audio playing");
+                })
+                .catch((err) => {
+                  console.error("❌ Audio play error:", err);
+                  console.log("💡 Try clicking on the audio player manually");
+                });
+            };
+
+            audioEl.onerror = (err) => {
+              console.error("❌ Audio load error:", err);
+              console.error("❌ Failed URL:", audioUrl);
+              textBox.textContent += "\n\n⚠️ Audio playback failed. Check console.";
+            };
+          } else {
+            console.warn("⚠️ No audio in response");
+          }
+        } catch (err) {
+          console.error("Error:", err);
+          textBox.innerHTML = `<span class="error">❌ ${err.message}<br>Make sure the backend is running on http://127.0.0.1:8000</span>`;
+        } finally {
+          busy = false;
+          askBtn.disabled = false;
+          micBtn.disabled = false;
+        }
+      }
+
+      console.log("✅ NERDZ '26 Bot Ready - Carousel & Chat Active");
+    </script>
+  </body>
+</html>
