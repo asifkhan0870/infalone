@@ -183,25 +183,53 @@ DATE_FAQ = {
         "answer": "NERDZ '26 is a two-day fest."
     },
 
-    "day1": {
-        "triggers": [
-            "day 1",
-            "first day",
-            "day one",
-            "nerdz day 1 date"
-        ],
-        "answer": "Day 1 of NERDZ '26 is on February 5, 2026."
-    },
+   "day1": {
+  "triggers": [
+    "day 1",
+    "first day",
+    "day one",
+    "nerdz day 1",
+    "nerdz day 1 date"
+  ],
+  "answer": [
+    "📅 Date: 5th February",
+    "🕙 10:00 AM – 12:00 PM: Inaugural Ceremony location Convention Centre",
+    "🕛 12:00 PM – 5:00 PM: Hackathon location Lab 401",
+    "🕛 12:00 PM – 5:00 PM: 5G Ideathon location Lab 427",
+    "🕛 12:00 PM – 2:00 PM: Tech Quiz  location Convention Centre",
+    "🕛 12:00 PM – 2:00 PM: Treasure Hunt location Stage, Football Ground",
+    "🕧 12:30 PM – 1:30 PM: Solo/Duet Singing  location Stage, Football Ground",
+    "🕜 1:30 PM – 2:30 PM: Break",
+    "🕝 2:30 PM – 3:30 PM: Dance Performance location Stage, Football Ground",
+    "🕞 3:30 PM – 5:00 PM: Bait Bazi location Archives",
+    "🕝 2:30 PM – 4:00 PM: Nukkad Natak location Near Stage",
+    "🕞 3:30 PM – 5:00 PM: Battle of Bands location Stage, Football Ground",
+    "🌙 5:30 PM Onwards: Star Night location Stage, Football Ground"
+  ]
+},
 
-    "day2": {
-        "triggers": [
-            "day 2",
-            "second day",
-            "day two",
-            "nerdz day 2 date"
-        ],
-        "answer": "Day 2 of NERDZ '26 is on February 6, 2026."
-    }
+ "day2": {
+  "triggers": [
+    "day 2",
+    "second day",
+    "day two",
+    "nerdz day 2",
+    "nerdz day 2 date"
+  ],
+  "answer": [
+    "📅 Date: 6th February",
+    "🕙 10:00 AM – 12:00 PM: UI Design Competition location Convention Centre",
+    "🕙 10:00 AM – 12:00 PM: Bug Fest  location 1st Floor Lab",
+    "🕦 11:30 AM – 3:00 PM: BattleZone location Cricket Ground",
+    "🕧 12:15 PM – 2:30 PM: Break",
+    "🕝 2:30 PM – 3:30 PM: SEST Theatre Performance location Archives",
+    "🕝 2:30 PM – 3:15 PM: Band Performance by Ignia Stage, Football Ground",
+    "🕞 3:30 PM – 5:00 PM: Valedictory Ceremony location Convention Centre",
+    "🌙 6:00 PM Onwards: Qawwali Night location Stage, Football Ground"
+  ]
+}
+
+
 }
 
 
