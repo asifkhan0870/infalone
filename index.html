@@ -744,7 +744,7 @@
         carouselAudio.src = "";
 
         try {
-          const res = await fetch("http://127.0.0.1:8000/guest-audio", {
+          const res = await fetch("/guest-audio", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ guest_index: index }),
@@ -755,7 +755,7 @@
           const data = await res.json();
 
           if (data.audio) {
-            const audioUrl = `http://127.0.0.1:8000/audio/${
+            const audioUrl = `/audio/${
               data.audio
             }?v=${Date.now()}`;
             carouselAudio.src = audioUrl;
@@ -949,7 +949,7 @@
           }
 
           if (data.audio) {
-            const audioUrl = `http://127.0.0.1:8000/audio/${
+            const audioUrl = `/audio/${
               data.audio
             }?v=${Date.now()}`;
             console.log("✅ Audio URL generated:", audioUrl);
